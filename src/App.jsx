@@ -1,10 +1,10 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom'
 import AdminPage from './components/AdminPage'
 import fifaLogo from './assets/fifa.png'
 import goldenWingsLogo from './assets/Golden_Wings_Logo_Vecter_File-removebg-preview.png'
 import heroBg from './assets/ESPANIO VS ARAKAL.png'
-import { savePrediction, checkDuplicateMobile } from './lib/supabase'
+import { savePrediction, checkDuplicateMobile, loadPredictions } from './lib/supabase'
 
 function PredictionPage() {
   const navigate = useNavigate()
@@ -35,6 +35,33 @@ function PredictionPage() {
   // Submit Loading and Error States
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitError, setSubmitError] = useState('')
+
+  // Public Stats State
+  const [publicStats, setPublicStats] = useState({ total: 0, mostPredicted: null, uniqueScores: 0 })
+
+  // Load public stats on mount
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const data = await loadPredictions()
+        if (!data || data.length === 0) return
+        // Count unique scorelines and find most predicted
+        const scoreMap = {}
+        data.forEach((p) => {
+          const key = `${p.argentina_score}-${p.spain_score}`
+          scoreMap[key] = (scoreMap[key] || 0) + 1
+        })
+        const topEntry = Object.entries(scoreMap).sort((a, b) => b[1] - a[1])[0]
+        const [argS, espS] = topEntry[0].split('-')
+        setPublicStats({
+          total: data.length,
+          mostPredicted: { arg: argS, esp: espS, count: topEntry[1] },
+          uniqueScores: Object.keys(scoreMap).length,
+        })
+      } catch {}
+    }
+    fetchStats()
+  }, [successMessage])
 
   // Validation function
   const validateField = (name, value) => {
@@ -557,6 +584,71 @@ function PredictionPage() {
           </form>
 
         </div>
+      </div>
+
+      {/* Stats + Rules Section */}
+      <div className="w-full max-w-[700px] mx-auto px-0 pb-6 space-y-5">
+
+        {/* 3 Live Stat Cards */}
+        <div className="grid grid-cols-3 gap-3">
+          {/* Total Participants */}
+          <div className="bg-black/30 border border-white/[0.15] rounded-2xl p-4 flex flex-col items-center text-center">
+            <span className="text-2xl mb-1">👥</span>
+            <span className="text-2xl sm:text-3xl font-black text-white">{publicStats.total}</span>
+            <span className="text-[10px] sm:text-xs font-semibold text-[#9CA3AF] uppercase tracking-wider mt-1">Participants</span>
+          </div>
+
+          {/* Most Predicted Score */}
+          <div className="bg-black/30 border border-white/[0.15] rounded-2xl p-4 flex flex-col items-center text-center">
+            <span className="text-2xl mb-1">🔥</span>
+            {publicStats.mostPredicted ? (
+              <span className="text-lg sm:text-xl font-black text-[#00B4FF]">
+                {publicStats.mostPredicted.arg} – {publicStats.mostPredicted.esp}
+              </span>
+            ) : (
+              <span className="text-sm font-bold text-[#9CA3AF]">—</span>
+            )}
+            <span className="text-[10px] sm:text-xs font-semibold text-[#9CA3AF] uppercase tracking-wider mt-1">Top Score</span>
+          </div>
+
+          {/* Unique Scorelines */}
+          <div className="bg-black/30 border border-white/[0.15] rounded-2xl p-4 flex flex-col items-center text-center">
+            <span className="text-2xl mb-1">🎯</span>
+            <span className="text-2xl sm:text-3xl font-black text-white">{publicStats.uniqueScores}</span>
+            <span className="text-[10px] sm:text-xs font-semibold text-[#9CA3AF] uppercase tracking-wider mt-1">Unique Scores</span>
+          </div>
+        </div>
+
+        {/* Rules Section */}
+        <div className="bg-black/30 border border-white/[0.15] rounded-2xl p-5 sm:p-6">
+          <div className="flex items-center gap-2 mb-4 pb-3 border-b border-white/[0.08]">
+            <span className="text-lg">📋</span>
+            <h3 className="text-sm font-bold uppercase tracking-widest text-[#00B4FF]">Contest Rules</h3>
+          </div>
+          <ul className="space-y-3">
+            <li className="flex items-start gap-3 text-sm text-white/90">
+              <span className="text-base shrink-0">✅</span>
+              <span>Follow our page</span>
+            </li>
+            <li className="flex items-start gap-3 text-sm text-white/90">
+              <span className="text-base shrink-0">❤️</span>
+              <span>Like this post</span>
+            </li>
+            <li className="flex items-start gap-3 text-sm text-white/90">
+              <span className="text-base shrink-0">📩</span>
+              <span>Submit only <span className="font-bold text-[#00B4FF]">ONE</span> prediction</span>
+            </li>
+            <li className="flex items-start gap-3 text-sm text-red-400">
+              <span className="text-base shrink-0">❌</span>
+              <span>Multiple entries will be <span className="font-bold">disqualified</span></span>
+            </li>
+            <li className="flex items-start gap-3 text-sm text-amber-300">
+              <span className="text-base shrink-0">🏆</span>
+              <span>Winner gets <span className="font-extrabold text-amber-300">₹1,000 Cash Prize</span></span>
+            </li>
+          </ul>
+        </div>
+
       </div>
 
       {/* Footer Section */}
