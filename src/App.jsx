@@ -283,7 +283,7 @@ function PredictionPage() {
       <div className="flex items-center justify-center w-full py-6">
         
         {/* Main Glassmorphic Card Container */}
-        <div className="animate-fade-in-up bg-[#161B22] backdrop-blur-md border border-white/[0.08] shadow-2xl shadow-black/55 rounded-[20px] p-6 sm:p-10 max-w-[700px] w-full mx-auto relative transition-all duration-500 mb-12">
+        <div className="animate-fade-in-up bg-black/30 backdrop-blur-xl border border-white/[0.15] shadow-2xl shadow-black/60 rounded-[20px] p-6 sm:p-10 max-w-[700px] w-full mx-auto relative transition-all duration-500 mb-12">
 
           {/* Header Section */}
           <div className="flex flex-col items-center text-center mb-10 mt-2">
@@ -401,7 +401,7 @@ function PredictionPage() {
               </div>
 
               {/* Dedicated Inset Dark Card for Match Prediction Area */}
-              <div className="bg-[#05070F] border border-white/[0.08] p-5 sm:p-8 rounded-xl flex flex-col md:flex-row items-center justify-between gap-6 md:gap-4">
+              <div className="bg-white/[0.05] border border-white/[0.12] p-5 sm:p-8 rounded-xl flex flex-col md:flex-row items-center justify-between gap-6 md:gap-4">
                 
                 {/* Argentina Team Section */}
                 <div className="flex flex-col items-center flex-1 w-full text-center bg-white/[0.02] border border-white/[0.04] p-4 rounded-xl md:bg-transparent md:border-none md:p-0">
