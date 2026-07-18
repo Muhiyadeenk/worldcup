@@ -293,45 +293,40 @@ function PredictionPage() {
 
   return (
     <div
-      className="min-h-screen w-full flex flex-col justify-start items-center text-white p-4 sm:p-6 md:p-8 select-none font-sans relative"
-      style={{
-        backgroundImage: `url(${heroBg})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'top center',
-        backgroundRepeat: 'no-repeat',
-      }}
+      className="page-bg min-h-screen flex flex-col items-center text-white select-none font-sans relative"
+      style={{ backgroundImage: `url(${heroBg})`, width: '100%', backgroundColor: '#1c1c1e', overflowX: 'hidden' }}
     >
-      {/* Dark overlay */}
-      <div className="absolute inset-0 bg-black/40 pointer-events-none" style={{ zIndex: 0 }} />
-      
-      {/* Brand Logo centered at the top of the page */}
-      <div className="mt-8 mb-6 flex justify-center z-20">
-        <img 
-          src={goldenWingsLogo} 
-          alt="Golden Wings Logo" 
-          className="h-20 sm:h-28 w-auto object-contain filter drop-shadow-md transform transition-transform duration-300 hover:scale-105" 
-        />
-      </div>
+      {/* Dark overlay — fades to match page background at bottom */}
+      <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 0, background: 'linear-gradient(to bottom, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.50) 45%, #1c1c1e 100%)' }} />
 
-      {/* Spacer to assist vertical centering */}
-      <div className="flex items-center justify-center w-full py-6">
-        
-        {/* Main Glassmorphic Card Container */}
-        <div className="animate-fade-in-up bg-black/10 border border-white/[0.20] shadow-2xl shadow-black/40 rounded-[20px] p-6 sm:p-10 max-w-[700px] w-full mx-auto relative transition-all duration-500 mb-12">
+      {/* ── ALL CONTENT: logo → card (no gap) ── */}
+      <div className="relative z-10 flex flex-col items-center w-full px-4 sm:px-6 pb-6">
+
+        {/* Golden Wings Logo at top */}
+        <div className="mt-8 mb-4 flex justify-center">
+          <img
+            src={goldenWingsLogo}
+            alt="Golden Wings Logo"
+            className="h-20 sm:h-28 w-auto object-contain filter drop-shadow-md transform transition-transform duration-300 hover:scale-105"
+          />
+        </div>
+
+        {/* Main Glassmorphic Card — directly below logo, zero gap */}
+        <div className="animate-fade-in-up bg-black/10 border border-white/[0.20] shadow-2xl shadow-black/40 rounded-[20px] p-6 sm:p-10 max-w-[700px] w-full mx-auto relative transition-all duration-500 mb-8">
 
           {/* Header Section */}
           <div className="flex flex-col items-center text-center mb-10 mt-2">
             {/* Company Logo with hover transition */}
             <div className="group mb-6 relative cursor-pointer">
               <div className="w-[140px] h-[140px] rounded-full overflow-hidden bg-white flex items-center justify-center border-2 border-white/[0.12] shadow-2xl transform transition-transform duration-300 group-hover:scale-105">
-                <img 
-                  src={fifaLogo} 
-                  alt="Company Logo" 
-                  className="w-full h-full object-contain p-2" 
+                <img
+                  src={fifaLogo}
+                  alt="Company Logo"
+                  className="w-full h-full object-contain p-2"
                 />
               </div>
             </div>
-            
+
             <h1 className="text-3xl sm:text-4xl font-extrabold text-white tracking-wide mb-3">
               World Cup Final Prediction
             </h1>
@@ -583,13 +578,12 @@ function PredictionPage() {
           </form>
 
         </div>
-      </div>
 
-      {/* Stats + Rules Section */}
-      <div className="w-full max-w-[700px] mx-auto px-0 pb-6 space-y-5">
+        {/* Stats + Rules Section - inside content wrapper, no gap */}
+        <div className="w-full max-w-[700px] mx-auto pb-6 space-y-5">
 
-        {/* 3 Live Stat Cards */}
-        <div className="grid grid-cols-3 gap-3">
+        {/* 2 Live Stat Cards */}
+        <div className="grid grid-cols-2 gap-3">
           {/* Total Participants */}
           <div className="bg-black/40 border border-white/[0.18] rounded-2xl py-5 px-2 flex flex-col items-center text-center">
             <span className="text-xl sm:text-2xl mb-1.5">👥</span>
@@ -607,15 +601,10 @@ function PredictionPage() {
             ) : (
               <span className="text-base font-bold text-[#9CA3AF]">—</span>
             )}
-            <span className="text-[9px] sm:text-[11px] font-bold text-[#9CA3AF] uppercase tracking-widest mt-2">Top Score</span>
+            <span className="text-[9px] sm:text-[11px] font-bold text-[#9CA3AF] uppercase tracking-widest mt-2">More Entered</span>
           </div>
 
-          {/* Unique Scorelines */}
-          <div className="bg-black/40 border border-white/[0.18] rounded-2xl py-5 px-2 flex flex-col items-center text-center">
-            <span className="text-xl sm:text-2xl mb-1.5">🎯</span>
-            <span className="text-2xl sm:text-3xl font-black text-white leading-none">{publicStats.uniqueScores}</span>
-            <span className="text-[9px] sm:text-[11px] font-bold text-[#9CA3AF] uppercase tracking-widest mt-2">Unique Scores</span>
-          </div>
+          {/* Unique Scorelines - REMOVED */}
         </div>
 
         {/* Rules Section */}
@@ -648,12 +637,14 @@ function PredictionPage() {
           </ul>
         </div>
 
-      </div>
+        </div>
 
-      {/* Footer Section */}
-      <footer className="text-center text-xs sm:text-sm text-[#9CA3AF]/50 tracking-wider pb-4 font-medium">
-        Good luck and enjoy the match!
-      </footer>
+        {/* Footer inside content wrapper */}
+        <footer className="text-center text-xs sm:text-sm text-[#9CA3AF]/50 tracking-wider pb-4 font-medium">
+          Good luck and enjoy the match!
+        </footer>
+
+      </div>{/* end z-10 content wrapper */}
 
       {/* Floating Login Button (Always visible bottom-right) */}
       <button
