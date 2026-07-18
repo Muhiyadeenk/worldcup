@@ -592,30 +592,30 @@ function PredictionPage() {
         {/* 3 Live Stat Cards */}
         <div className="grid grid-cols-3 gap-3">
           {/* Total Participants */}
-          <div className="bg-black/30 border border-white/[0.15] rounded-2xl p-4 flex flex-col items-center text-center">
-            <span className="text-2xl mb-1">👥</span>
-            <span className="text-2xl sm:text-3xl font-black text-white">{publicStats.total}</span>
-            <span className="text-[10px] sm:text-xs font-semibold text-[#9CA3AF] uppercase tracking-wider mt-1">Participants</span>
+          <div className="bg-black/40 border border-white/[0.18] rounded-2xl py-5 px-2 flex flex-col items-center text-center">
+            <span className="text-xl sm:text-2xl mb-1.5">👥</span>
+            <span className="text-2xl sm:text-3xl font-black text-white leading-none">{publicStats.total}</span>
+            <span className="text-[9px] sm:text-[11px] font-bold text-[#9CA3AF] uppercase tracking-widest mt-2">Participants</span>
           </div>
 
           {/* Most Predicted Score */}
-          <div className="bg-black/30 border border-white/[0.15] rounded-2xl p-4 flex flex-col items-center text-center">
-            <span className="text-2xl mb-1">🔥</span>
+          <div className="bg-black/40 border border-white/[0.18] rounded-2xl py-5 px-2 flex flex-col items-center text-center">
+            <span className="text-xl sm:text-2xl mb-1.5">🔥</span>
             {publicStats.mostPredicted ? (
-              <span className="text-lg sm:text-xl font-black text-[#00B4FF]">
+              <span className="text-base sm:text-xl font-black text-[#00B4FF] leading-none">
                 {publicStats.mostPredicted.arg} – {publicStats.mostPredicted.esp}
               </span>
             ) : (
-              <span className="text-sm font-bold text-[#9CA3AF]">—</span>
+              <span className="text-base font-bold text-[#9CA3AF]">—</span>
             )}
-            <span className="text-[10px] sm:text-xs font-semibold text-[#9CA3AF] uppercase tracking-wider mt-1">Top Score</span>
+            <span className="text-[9px] sm:text-[11px] font-bold text-[#9CA3AF] uppercase tracking-widest mt-2">Top Score</span>
           </div>
 
           {/* Unique Scorelines */}
-          <div className="bg-black/30 border border-white/[0.15] rounded-2xl p-4 flex flex-col items-center text-center">
-            <span className="text-2xl mb-1">🎯</span>
-            <span className="text-2xl sm:text-3xl font-black text-white">{publicStats.uniqueScores}</span>
-            <span className="text-[10px] sm:text-xs font-semibold text-[#9CA3AF] uppercase tracking-wider mt-1">Unique Scores</span>
+          <div className="bg-black/40 border border-white/[0.18] rounded-2xl py-5 px-2 flex flex-col items-center text-center">
+            <span className="text-xl sm:text-2xl mb-1.5">🎯</span>
+            <span className="text-2xl sm:text-3xl font-black text-white leading-none">{publicStats.uniqueScores}</span>
+            <span className="text-[9px] sm:text-[11px] font-bold text-[#9CA3AF] uppercase tracking-widest mt-2">Unique Scores</span>
           </div>
         </div>
 
