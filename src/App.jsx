@@ -268,7 +268,7 @@ function PredictionPage() {
       }}
     >
       {/* Dark overlay so the card stays readable */}
-      <div className="absolute inset-0 bg-black/65 z-0 pointer-events-none" />
+      <div className="absolute inset-0 bg-black/40 z-0 pointer-events-none" />
       
       {/* Brand Logo centered at the top of the page */}
       <div className="mt-8 mb-6 flex justify-center z-20">
@@ -283,7 +283,7 @@ function PredictionPage() {
       <div className="flex items-center justify-center w-full py-6">
         
         {/* Main Glassmorphic Card Container */}
-        <div className="animate-fade-in-up bg-black/30 backdrop-blur-xl border border-white/[0.15] shadow-2xl shadow-black/60 rounded-[20px] p-6 sm:p-10 max-w-[700px] w-full mx-auto relative transition-all duration-500 mb-12">
+        <div className="animate-fade-in-up bg-black/10 backdrop-blur-sm border border-white/[0.20] shadow-2xl shadow-black/40 rounded-[20px] p-6 sm:p-10 max-w-[700px] w-full mx-auto relative transition-all duration-500 mb-12">
 
           {/* Header Section */}
           <div className="flex flex-col items-center text-center mb-10 mt-2">
