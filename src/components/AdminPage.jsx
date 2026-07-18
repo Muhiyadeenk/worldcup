@@ -7,6 +7,8 @@ function AdminPage() {
   const [predictions, setPredictions] = useState([])
   const [searchTerm, setSearchTerm] = useState('')
   const [resultFilter, setResultFilter] = useState('All')
+  const [argScoreFilter, setArgScoreFilter] = useState('')
+  const [espScoreFilter, setEspScoreFilter] = useState('')
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
 
@@ -58,7 +60,20 @@ function AdminPage() {
       matchesResult = arg === esp
     }
     
-    return (nameMatch || numberMatch || instagramMatch) && matchesResult
+    // Score filter — only apply if at least one score is entered
+    const hasScoreFilter = argScoreFilter !== '' || espScoreFilter !== ''
+    let matchesScore = true
+    if (hasScoreFilter) {
+      if (argScoreFilter !== '' && espScoreFilter !== '') {
+        matchesScore = arg === Number(argScoreFilter) && esp === Number(espScoreFilter)
+      } else if (argScoreFilter !== '') {
+        matchesScore = arg === Number(argScoreFilter)
+      } else {
+        matchesScore = esp === Number(espScoreFilter)
+      }
+    }
+
+    return (nameMatch || numberMatch || instagramMatch) && matchesResult && matchesScore
   })
 
   // Helper to determine game result text
@@ -199,6 +214,47 @@ function AdminPage() {
                 />
               </div>
             </div>
+          </div>
+
+          {/* Score Filter Row */}
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-1">
+            <span className="text-xs font-semibold text-[#9CA3AF] uppercase tracking-wider whitespace-nowrap self-center">Filter by Score:</span>
+            {/* Argentina Score */}
+            <div className="flex items-center gap-2">
+              <img src="https://flagcdn.com/ar.svg" alt="ARG" className="w-6 h-4 rounded-sm object-cover border border-white/10 shrink-0" />
+              <input
+                id="argScoreFilter"
+                type="number"
+                min="0"
+                placeholder="ARG"
+                value={argScoreFilter}
+                onChange={(e) => setArgScoreFilter(e.target.value)}
+                className="w-[70px] h-10 px-3 text-center bg-[#05070F] border border-white/[0.08] rounded-xl text-white placeholder-[#9CA3AF]/40 focus:outline-none focus:ring-2 focus:ring-sky-400 focus:border-sky-400 text-sm transition-all duration-200"
+              />
+            </div>
+            <span className="text-[#9CA3AF]/40 font-bold text-xs self-center">VS</span>
+            {/* Spain Score */}
+            <div className="flex items-center gap-2">
+              <img src="https://flagcdn.com/es.svg" alt="ESP" className="w-6 h-4 rounded-sm object-cover border border-white/10 shrink-0" />
+              <input
+                id="espScoreFilter"
+                type="number"
+                min="0"
+                placeholder="ESP"
+                value={espScoreFilter}
+                onChange={(e) => setEspScoreFilter(e.target.value)}
+                className="w-[70px] h-10 px-3 text-center bg-[#05070F] border border-white/[0.08] rounded-xl text-white placeholder-[#9CA3AF]/40 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-amber-400 text-sm transition-all duration-200"
+              />
+            </div>
+            {/* Clear score filter button */}
+            {(argScoreFilter !== '' || espScoreFilter !== '') && (
+              <button
+                onClick={() => { setArgScoreFilter(''); setEspScoreFilter('') }}
+                className="h-10 px-3 bg-[#21262D] border border-white/[0.08] hover:border-red-400/50 hover:text-red-400 text-[#9CA3AF] rounded-xl text-xs font-semibold cursor-pointer transition-all duration-200 whitespace-nowrap"
+              >
+                Clear ✕
+              </button>
+            )}
           </div>
 
           {/* Prediction Table */}
