@@ -292,17 +292,25 @@ function PredictionPage() {
   }
 
   return (
-    <div
-      className="min-h-screen w-full flex flex-col justify-start items-center text-white p-4 sm:p-6 md:p-8 select-none font-sans relative"
-      style={{
+    <div className="min-h-screen w-full flex flex-col justify-start items-center text-white p-4 sm:p-6 md:p-8 select-none font-sans relative">
+
+      {/* Fixed background image — works on all mobile browsers including iOS */}
+      <div style={{
+        position: 'fixed',
+        top: 0, left: 0, right: 0, bottom: 0,
         backgroundImage: `url(${heroBg})`,
         backgroundSize: 'cover',
         backgroundPosition: 'top center',
         backgroundRepeat: 'no-repeat',
-      }}
-    >
-      {/* Dark overlay so the card stays readable */}
-      <div className="absolute inset-0 bg-black/40 z-0 pointer-events-none" />
+        zIndex: -2,
+      }} />
+      {/* Fixed dark overlay */}
+      <div style={{
+        position: 'fixed',
+        top: 0, left: 0, right: 0, bottom: 0,
+        background: 'rgba(0,0,0,0.40)',
+        zIndex: -1,
+      }} />
       
       {/* Brand Logo centered at the top of the page */}
       <div className="mt-8 mb-6 flex justify-center z-20">
