@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-route
 import AdminPage from './components/AdminPage'
 import fifaLogo from './assets/fifa.png'
 import goldenWingsLogo from './assets/Golden_Wings_Logo_Vecter_File-removebg-preview.png'
+import heroBg from './assets/ESPANIO VS ARAKAL.png'
 import { savePrediction } from './lib/supabase'
 
 function PredictionPage() {
@@ -256,7 +257,18 @@ function PredictionPage() {
   }
 
   return (
-    <div className="min-h-screen w-full flex flex-col justify-start items-center text-white p-4 sm:p-6 md:p-8 select-none font-sans relative">
+    <div
+      className="min-h-screen w-full flex flex-col justify-start items-center text-white p-4 sm:p-6 md:p-8 select-none font-sans relative"
+      style={{
+        backgroundImage: `url(${heroBg})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        backgroundAttachment: 'fixed',
+      }}
+    >
+      {/* Dark overlay so the card stays readable */}
+      <div className="absolute inset-0 bg-black/65 z-0 pointer-events-none" />
       
       {/* Brand Logo centered at the top of the page */}
       <div className="mt-8 mb-6 flex justify-center z-20">
