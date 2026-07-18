@@ -299,7 +299,6 @@ function PredictionPage() {
         backgroundSize: 'cover',
         backgroundPosition: 'top center',
         backgroundRepeat: 'no-repeat',
-        backgroundAttachment: 'fixed',
       }}
     >
       {/* Dark overlay so the card stays readable */}
