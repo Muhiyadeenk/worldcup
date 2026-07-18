@@ -231,6 +231,30 @@ function PredictionPage() {
   // Determine if there are currently any errors shown on touched fields
   const hasErrors = Object.keys(errors).some((key) => touched[key] && errors[key])
 
+  const isConfigured = !!import.meta.env.VITE_SUPABASE_URL && !!import.meta.env.VITE_SUPABASE_ANON_KEY
+
+  if (!isConfigured) {
+    return (
+      <div className="min-h-screen w-full flex flex-col justify-center items-center text-white p-6 font-sans bg-[#05070F] select-none">
+        <div className="bg-[#161B22] border border-red-500/20 max-w-md w-full p-8 rounded-[20px] shadow-2xl text-center">
+          <span className="text-5xl mb-4 block">⚠️</span>
+          <h2 className="text-xl font-bold text-red-400 mb-4">Database Connection Missing</h2>
+          <p className="text-sm text-[#9CA3AF] mb-6 leading-relaxed">
+            This project is connected to Supabase, but the environment variables are not configured in your hosting dashboard.
+          </p>
+          <div className="text-left bg-[#05070F] p-5 rounded-xl border border-white/[0.08] text-xs font-mono space-y-2 mb-6 select-text">
+            <div className="text-[#00B4FF] mb-1 font-semibold"># Setup Environment Variables in Vercel:</div>
+            <div>VITE_SUPABASE_URL = <span className="text-[#9CA3AF]">https://tlneridakprvnbihmjsc.supabase.co</span></div>
+            <div>VITE_SUPABASE_ANON_KEY = <span className="text-[#9CA3AF]">YOUR_PUBLISHABLE_KEY</span></div>
+          </div>
+          <p className="text-xs text-[#9CA3AF]/60 leading-normal">
+            Once these variables are added in your Vercel Dashboard, redeploy the site to activate the prediction form.
+          </p>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="min-h-screen w-full flex flex-col justify-start items-center text-white p-4 sm:p-6 md:p-8 select-none font-sans relative">
       

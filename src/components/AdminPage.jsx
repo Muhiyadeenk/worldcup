@@ -75,6 +75,33 @@ function AdminPage() {
     navigate('/')
   }
 
+  const isConfigured = !!import.meta.env.VITE_SUPABASE_URL && !!import.meta.env.VITE_SUPABASE_ANON_KEY
+
+  if (!isConfigured) {
+    return (
+      <div className="min-h-screen w-full flex flex-col justify-center items-center text-white p-6 font-sans bg-[#05070F] select-none">
+        <div className="bg-[#161B22] border border-red-500/20 max-w-md w-full p-8 rounded-[20px] shadow-2xl text-center">
+          <span className="text-5xl mb-4 block">⚠️</span>
+          <h2 className="text-xl font-bold text-red-400 mb-4">Database Connection Missing</h2>
+          <p className="text-sm text-[#9CA3AF] mb-6 leading-relaxed">
+            The Admin Dashboard requires Supabase credentials to function.
+          </p>
+          <div className="text-left bg-[#05070F] p-5 rounded-xl border border-white/[0.08] text-xs font-mono space-y-2 mb-6 select-text">
+            <div className="text-[#00B4FF] mb-1 font-semibold"># Setup Environment Variables in Vercel:</div>
+            <div>VITE_SUPABASE_URL = <span className="text-[#9CA3AF]">https://tlneridakprvnbihmjsc.supabase.co</span></div>
+            <div>VITE_SUPABASE_ANON_KEY = <span className="text-[#9CA3AF]">YOUR_PUBLISHABLE_KEY</span></div>
+          </div>
+          <button
+            onClick={() => navigate('/')}
+            className="py-2.5 px-5 bg-[#21262D] border border-white/[0.08] hover:border-[#00B4FF] hover:text-[#00B4FF] text-white rounded-xl font-semibold text-sm cursor-pointer transition-all duration-300"
+          >
+            Go Back
+          </button>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="min-h-screen w-full flex flex-col justify-between items-center text-white p-4 sm:p-6 md:p-8 select-none font-sans relative">
       

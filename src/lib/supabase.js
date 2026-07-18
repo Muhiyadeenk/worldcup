@@ -1,15 +1,21 @@
 import { createClient } from "@supabase/supabase-js";
 
-export const supabase = createClient(
-  import.meta.env.VITE_SUPABASE_URL,
-  import.meta.env.VITE_SUPABASE_ANON_KEY
-);
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+
+export const supabase = supabaseUrl && supabaseAnonKey
+  ? createClient(supabaseUrl, supabaseAnonKey)
+  : null;
 
 /**
  * Saves a prediction record to Supabase predictions table.
  * Fallbacks to appending Instagram ID to participant name.
  */
 export const savePrediction = async (participantName, participantNumber, instagramId, argentinaScore, spainScore) => {
+  if (!supabase) {
+    throw new Error("Supabase is not configured. Please add VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY to your environment variables.");
+  }
+
   let result = '';
   const arg = Number(argentinaScore);
   const esp = Number(spainScore);
@@ -45,6 +51,10 @@ export const savePrediction = async (participantName, participantNumber, instagr
  * Fetches all prediction entries sorted by created_at descending.
  */
 export const loadPredictions = async () => {
+  if (!supabase) {
+    throw new Error("Supabase is not configured. Please add VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY to your environment variables.");
+  }
+
   const { data, error } = await supabase
     .from("predictions")
     .select("*")
@@ -79,3 +89,4 @@ export const calculateStatistics = (predictions = []) => {
     draws,
   };
 };
+
