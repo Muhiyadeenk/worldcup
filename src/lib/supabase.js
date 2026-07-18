@@ -65,6 +65,25 @@ export const loadPredictions = async () => {
 };
 
 /**
+ * Checks if a prediction with the given mobile number already exists.
+ * Returns true if a duplicate exists, false otherwise.
+ */
+export const checkDuplicateMobile = async (participantNumber) => {
+  if (!supabase) {
+    throw new Error("Supabase is not configured.");
+  }
+
+  const { data, error } = await supabase
+    .from("predictions")
+    .select("id")
+    .eq("participant_number", participantNumber.toString().trim())
+    .limit(1);
+
+  if (error) throw error;
+  return data && data.length > 0;
+};
+
+/**
  * Calculates total predictions, wins, and draws statistics.
  */
 export const calculateStatistics = (predictions = []) => {

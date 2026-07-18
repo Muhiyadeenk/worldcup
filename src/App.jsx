@@ -4,7 +4,7 @@ import AdminPage from './components/AdminPage'
 import fifaLogo from './assets/fifa.png'
 import goldenWingsLogo from './assets/Golden_Wings_Logo_Vecter_File-removebg-preview.png'
 import heroBg from './assets/ESPANIO VS ARAKAL.png'
-import { savePrediction } from './lib/supabase'
+import { savePrediction, checkDuplicateMobile } from './lib/supabase'
 
 function PredictionPage() {
   const navigate = useNavigate()
@@ -158,6 +158,14 @@ function PredictionPage() {
     if (isValid) {
       setIsSubmitting(true)
       try {
+        // Check if this mobile number already has a prediction
+        const isDuplicate = await checkDuplicateMobile(participantNumber)
+        if (isDuplicate) {
+          setSubmitError('This mobile number has already submitted a prediction.\nOnly one prediction per person is allowed.')
+          setIsSubmitting(false)
+          return
+        }
+
         await savePrediction(
           participantName,
           participantNumber,
