@@ -262,7 +262,7 @@ function PredictionPage() {
       style={{
         backgroundImage: `url(${heroBg})`,
         backgroundSize: 'cover',
-        backgroundPosition: 'center',
+        backgroundPosition: 'top center',
         backgroundRepeat: 'no-repeat',
         backgroundAttachment: 'fixed',
       }}
