@@ -640,9 +640,11 @@ function PredictionPage() {
         </div>
 
         {/* Footer inside content wrapper */}
-        <footer className="text-center text-xs sm:text-sm text-[#9CA3AF]/50 tracking-wider pb-4 font-medium">
-          Good luck and enjoy the match!
+        <footer className="text-center text-xs sm:text-sm text-[#9CA3AF]/50 tracking-wider pb-4 font-medium flex flex-col items-center gap-1">
+          <span>Good luck and enjoy the match!</span>
+          <span className="text-[10px] opacity-75 font-normal tracking-normal mt-0.5">Powered by MK</span>
         </footer>
+
 
       </div>{/* end z-10 content wrapper */}
 
